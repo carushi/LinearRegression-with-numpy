@@ -41,11 +41,15 @@ class LassoRegression(Regression):
 		self.tlambda = tlambda
 
 	def updatexTylasso(self, x, y):
-		self.xTy = self.xTy+np.matrix(x).T*y+self.tlambda*np.ones(self.length)
+		self.xTy = self.xTy+np.matrix(x).T*y
 
 	def update(self, x, y):
 		self.updatexTx(x)
 		self.updatexTylasso(x, y)
+
+	def getW(self):
+		return np.linalg.solve(self.xTx, self.xTy-self.tlambda*np.matrix(np.ones(self.length)).T)
+
 
 
 if __name__=="__main__":
